@@ -82,19 +82,18 @@ namespace VelsatMobile.Services.FirebaseService
 
         private async Task<string> GetAccessTokenAsync()
         {
-            string jsonPath = _configuration["Firebase:CredentialsPath"];
+            // Credenciales de la cuenta de servicio guardadas como objeto en appsettings.json (Firebase:Credentials)
+            var credentialsSection = _configuration.GetSection("Firebase:Credentials");
+            if (!credentialsSection.Exists())
+                throw new InvalidOperationException("Falta la sección Firebase:Credentials en la configuración");
 
-            // Si es ruta relativa, la resuelve desde la raíz del proyecto
-            if (!Path.IsPathRooted(jsonPath))
-                jsonPath = Path.Combine(AppContext.BaseDirectory, jsonPath);
+            var credentialsJson = JsonSerializer.Serialize(
+                credentialsSection.GetChildren().ToDictionary(c => c.Key, c => c.Value));
 
-            GoogleCredential credential;
-            using (var stream = new FileStream(jsonPath, FileMode.Open, FileAccess.Read))
-            {
-                credential = GoogleCredential
-                    .FromStream(stream)
-                    .CreateScoped("https://www.googleapis.com/auth/firebase.messaging");
-            }
+            GoogleCredential credential = CredentialFactory
+                .FromJson<ServiceAccountCredential>(credentialsJson)
+                .ToGoogleCredential()
+                .CreateScoped("https://www.googleapis.com/auth/firebase.messaging");
 
             return await credential.UnderlyingCredential.GetAccessTokenForRequestAsync();
         }

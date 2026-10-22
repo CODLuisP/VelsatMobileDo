@@ -1,0 +1,28 @@
+version: "3.8"
+
+services:
+  velsat-mobile:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: velsat-mobile:latest
+    container_name: velsat-mobile
+    restart: unless-stopped
+    ports:
+      - "127.0.0.1:3011:8080"
+    environment:
+      - TZ=America/Lima
+      - ASPNETCORE_URLS=http://0.0.0.0:8080
+      - ASPNETCORE_ENVIRONMENT=Production
+    volumes:
+      - ./VelsatBackendAPI/appsettings.json:/app/appsettings.json:ro
+    logging:
+      driver: json-file
+      options:
+        max-size: "10m"
+        max-file: "3"
+
+networks:
+  default:
+    name: app-net
+    external: true

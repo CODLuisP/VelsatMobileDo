@@ -1,0 +1,34 @@
+# Control de versiones e IDE
+.git/
+.gitignore
+.gitattributes
+.github/
+.vs/
+.vscode/
+.idea/
+*.user
+*.suo
+
+# Artefactos de compilación
+**/bin/
+**/obj/
+**/out/
+
+# Configuración y secretos (appsettings.json se monta en tiempo de ejecución)
+**/appsettings*.json
+**/firebase-credentials*.json
+**/*credentials*.json
+**/*.pfx
+**/*.p12
+**/*.pem
+**/*.key
+.env
+**/.env
+**/.env.*
+
+# Docker y documentación
+Dockerfile
+docker-compose*.yml
+.dockerignore
+README.md
+**/*.log

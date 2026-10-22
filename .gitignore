@@ -365,3 +365,14 @@ FodyWeavers.xsd
 firebase-credentials.json
 **/firebase-credentials.json
 *-firebase-adminsdk-*.json
+
+# ── Configuración y secretos fuera de git (appsettings.json se crea a mano en el servidor) ──
+appsettings*.json
+**/appsettings*.json
+**/*credentials*.json
+.env
+**/.env
+**/.env.*
+*.pfx
+*.p12
+*.pem
