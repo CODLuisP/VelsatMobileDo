@@ -34,7 +34,7 @@ namespace VelsatBackendAPI.Data.Services
                 FROM (
                     SELECT deviceID FROM device WHERE accountID = @Login 
                     UNION ALL 
-                    SELECT deviceID FROM gestion_villa.deviceuser WHERE userID = @Login AND Status = 1
+                    SELECT deviceID FROM urbano.deviceuser WHERE userID = @Login AND Status = 1
                 ) AS combined_devices";
 
             _deviceIds = (await _defaultConnection.QueryAsync<string>(
