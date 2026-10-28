@@ -31,7 +31,7 @@ namespace VelsatMobile.Data.Repositories
         FROM (
             SELECT deviceID FROM device WHERE accountID = @AccountID 
             UNION ALL 
-            SELECT deviceID FROM urbano.deviceuser WHERE userID = @AccountID AND Status = 1
+            SELECT deviceID FROM deviceuser WHERE userID = @AccountID AND Status = 1
         ) AS combined_devices";
 
             return await _defaultConnection.QueryAsync<Unidad>(sql, new { AccountID = accountID });

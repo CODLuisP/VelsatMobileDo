@@ -143,7 +143,7 @@ namespace VelsatBackendAPI.Data.Repositories
                         string consultaTabla = nombreTabla.Tabla;
 
                         // Consultar cada tabla histórica
-                        string sqlR = $@"select deviceID, MAX(odometerKM) AS maximo, MIN(odometerKM) AS minimo, (MAX(odometerKM) - MIN(odometerKM)) as kilometros from {consultaTabla} where deviceID in (select deviceID from urbano.device where accountID=@AccountID) and timestamp between @FechainiUnix and @FechafinUnix group by deviceID";
+                        string sqlR = $@"select deviceID, MAX(odometerKM) AS maximo, MIN(odometerKM) AS minimo, (MAX(odometerKM) - MIN(odometerKM)) as kilometros from {consultaTabla} where deviceID in (select deviceID from device where accountID=@AccountID) and timestamp between @FechainiUnix and @FechafinUnix group by deviceID";
 
                         var parameters = new DynamicParameters();
                         parameters.Add("FechainiUnix", resultadoDias.UnixFechaInicio);
